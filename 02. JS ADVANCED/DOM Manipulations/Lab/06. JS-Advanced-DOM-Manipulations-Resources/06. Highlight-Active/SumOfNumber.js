@@ -9,3 +9,4 @@ function sum(arr) {
 var proba
 var tretaProba
 дфгсд
+var четвъртаПроба
