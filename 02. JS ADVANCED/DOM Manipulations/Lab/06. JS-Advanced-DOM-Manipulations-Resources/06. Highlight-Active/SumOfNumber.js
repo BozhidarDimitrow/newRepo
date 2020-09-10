@@ -7,4 +7,4 @@ function sum(arr) {
     return sum;
 }
 var proba
-var tretaProba
+var четвъртаПроба
