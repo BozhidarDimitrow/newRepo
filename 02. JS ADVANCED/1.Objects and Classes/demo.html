@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FromJSONToHTMLTable</title>
+    <style>
+        table,
+        th {
+            border: groove;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid black;
+        }
+
+        td,
+        th {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+    </div>
+    <script>
+        function fromJSONToHTMLTable(input) {
+            input = JSON.parse(input)
+
+let pattern1 = /[&]/
+let pattern2 = /["]/
+let pattern3 = /[`]/
+let pattern4 = /[<]/
+let pattern5 = /[>]/
+keyArray = []
+valueArray = []
+
+for (let i = 0; i < input.length; i++) {
+    let currObj = input[i]
+    keyArray = Object.keys(currObj)
+    for (const key in currObj) {
+        valueArray.push(currObj[key])
+    }
+}
+
+for (let i = 0; i < keyArray.length; i++) {
+
+    if (isNaN(Number(keyArray[i]))) {
+        keyArray[i] = keyArray[i].replace(pattern1, "&amp")
+            .replace(pattern2, "&quot")
+            .replace(pattern3, "&#039")
+            .replace(pattern4, "&lt")
+            .replace(pattern5, "&gt")
+
+    }
+}
+for (let i = 0; i < valueArray.length; i++) {
+
+    if (isNaN(Number(valueArray[i]))) {
+
+        valueArray[i] = valueArray[i].replace(pattern1, "&amp")
+            .replace(pattern2, "&quot")
+            .replace(pattern3, "&#039")
+            .replace(pattern4, "&lt")
+            .replace(pattern5, "&gt")
+    }
+}
+let returnString = `<table>\n<tr><th>${keyArray.join("</th><th>")}</th></tr>\n`
+// console.log(`<table>`);
+// console.log(`<tr><th>${keyArray.join("</th><th>")}</th></tr>`);
+
+for (let i = 0; i < valueArray.length; i+= keyArray.length){
+    let currentArr = []
+    returnString += `<tr>`
+    for(let j = 0; j < keyArray.length; j++){
+        returnString += `<td>${valueArray[i+j]}</td>`
+    }
+    returnString +=`</tr>\n`
+}
+
+return returnString + `</table>`
+        }
+
+        window.onload = function () {
+            let container = document.getElementById('wrapper');
+            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Tomatoes & Chips","Price":2.35},{"Name":"J&B Chocolate","Price":0.96}]']);
+        };
+    </script>
+</body>
+
+</html>
