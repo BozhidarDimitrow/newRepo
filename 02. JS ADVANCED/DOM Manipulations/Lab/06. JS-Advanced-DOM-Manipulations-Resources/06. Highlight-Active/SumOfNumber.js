@@ -6,3 +6,4 @@ function sum(arr) {
         sum += Number(num);
     return sum;
 }
+var proba
