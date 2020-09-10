@@ -7,3 +7,4 @@ function sum(arr) {
     return sum;
 }
 var proba
+var tretaProba
